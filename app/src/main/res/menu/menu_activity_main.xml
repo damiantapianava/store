@@ -4,6 +4,6 @@
 
     <item android:id="@+id/menu_add_entry"
         android:title="@string/str_menu_add_item"
-        android:icon="@drawable/ic_stat_action_perm_identity"
-        app:showAsAction="never" />
+        android:icon="@mipmap/ic_add_item"
+        app:showAsAction="ifRoom" />
 </menu>

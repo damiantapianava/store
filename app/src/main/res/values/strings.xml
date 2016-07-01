@@ -2,5 +2,10 @@
     <string name="app_name">store</string>
     <string name="empty_list_msg">No hay Apps instaladas</string>
     <string name="str_toolbar_title">UNAM App Manager</string>
-    <string name="str_menu_add_item">Agregarr</string>
+    <string name="str_menu_add_item">Agregar</string>
+    <string name="str_name_app">Nombre de la app</string>
+    <string name="str_name_developer">Nombre del desarrollador</string>
+    <string name="str_app_details">Detalle de la app...</string>
+    <string name="str_app_status">instalada / actualizada</string>
+    <string name="str_save_button">Salvar</string>
 </resources>
