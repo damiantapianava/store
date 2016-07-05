@@ -9,12 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener
 {
     private static final int REQUEST_CODE_SECOND_ACTIVITY = 1;
 
@@ -26,8 +27,11 @@ public class MainActivity extends AppCompatActivity
 
     private ListView lista_app_info;
 
+    private Intent intent;
+
     private AppInfoDAO dao;
     private AppInfoAdapter adapter;
+    private AppInfoModel info;
 
     private List<AppInfoModel> lista_app_info_model;
 
@@ -41,6 +45,8 @@ public class MainActivity extends AppCompatActivity
                toolbar = (Toolbar)  findViewById(R.id.toolbar);
         lista_app_info = (ListView) findViewById(R.id.lista_app_info);
              empty_msg = (TextView) findViewById(R.id.tv_empty_list_msg);
+
+        lista_app_info.setOnItemClickListener(this);
 
         setSupportActionBar(toolbar);
 
@@ -76,12 +82,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        context = getApplicationContext();
-
         switch (item.getItemId())
         {
             case R.id.menu_add_entry:
-                Intent intent = new Intent(context, AddActivity.class);
+                intent = new Intent(context, AddActivity.class);
 
                 startActivityForResult(intent, REQUEST_CODE_SECOND_ACTIVITY);
 
@@ -108,5 +112,18 @@ public class MainActivity extends AppCompatActivity
 
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        adapter = (AppInfoAdapter) parent.getAdapter();
+
+        info = adapter.getItem(position);
+
+        intent = new Intent(context, DetailActivity.class);
+        intent.putExtra("item", info);
+
+        startActivityForResult(intent, REQUEST_CODE_SECOND_ACTIVITY);
     }
 }

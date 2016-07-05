@@ -48,6 +48,13 @@
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:text="@string/str_edit_button"
+            android:id="@+id/btn_edit"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>

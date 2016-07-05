@@ -17,6 +17,10 @@ public class AppInfoDAO
 
     private ContentValues contentValues;
 
+    private String selection;
+
+    private String[] selectionArgs;
+
     public AppInfoDAO(Context context)
     {
         helper = new MySqliteHelper(context);
@@ -44,6 +48,30 @@ public class AppInfoDAO
         }
     }
 
+    public boolean update(AppInfoModel info)
+    {
+        selection = MySqliteHelper.COLUMN_ID + " = ?";
+
+        selectionArgs = new String[]{info.getApp_info_id() + ""};
+
+        contentValues = new ContentValues();
+        contentValues.put(MySqliteHelper.COLUMN_NAME_APP, info.getName_app());
+        contentValues.put(MySqliteHelper.COLUMN_NAME_DEV, info.getName_dev());
+        contentValues.put(MySqliteHelper.COLUMN_DETAIL,   info.getDetails());
+        contentValues.put(MySqliteHelper.COLUMN_STATUS,   info.getApp_status());
+
+        long row_id = db.update(MySqliteHelper.TABLE_NAME, contentValues, selection, selectionArgs);
+
+        if(row_id > 0)
+        {
+            return true;
+
+        }  else {
+
+            return false;
+        }
+    }
+
     public List<AppInfoModel> getLista_AppInfo()
     {
         List<AppInfoModel> modelItemList = new ArrayList<>();
@@ -59,6 +87,7 @@ public class AppInfoDAO
             String details  = cursor.getString(cursor.getColumnIndexOrThrow(MySqliteHelper.COLUMN_DETAIL));
 
             AppInfoModel info = new AppInfoModel();
+            info.setApp_info_id(id);
             info.setName_app(name_app);
             info.setName_dev(name_dev);
             info.setDetails(details);

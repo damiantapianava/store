@@ -1,12 +1,23 @@
 package mx.unam.store;
 
-public class AppInfoModel
+import java.io.Serializable;
+
+public class AppInfoModel implements Serializable
 {
     private String name_app;
     private String name_dev;
     private String details;
 
+    private int app_info_id;
     private int app_status;
+
+    public int getApp_info_id() {
+        return app_info_id;
+    }
+
+    public void setApp_info_id(int app_info_id) {
+        this.app_info_id = app_info_id;
+    }
 
     public String getName_app() {
         return name_app;
