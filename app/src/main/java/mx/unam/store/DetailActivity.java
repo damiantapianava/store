@@ -23,17 +23,6 @@ public class DetailActivity extends DetailActivityDMO
         init_intent_info(intent);
     }
 
-    private void init_intent_info(Intent intent)
-    {
-        info = (AppInfoModel) intent.getExtras().getSerializable("item");
-
-        name_app.setText(info.getName_app());
-        name_dev.setText(info.getName_dev());
-        details.setText(info.getDetails());
-        app_status.setChecked(info.getApp_status() > 0 ? true : false);
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_open:
@@ -41,8 +30,11 @@ public class DetailActivity extends DetailActivityDMO
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
                 break;
+
             case R.id.btn_uninstall:
+                init_uninstall();
                 break;
+
             case R.id.btn_update:
                 break;
         }

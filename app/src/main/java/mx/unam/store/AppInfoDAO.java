@@ -72,6 +72,24 @@ public class AppInfoDAO
         }
     }
 
+    public boolean delete(AppInfoModel info)
+    {
+        selection = MySqliteHelper.COLUMN_ID + " = ?";
+
+        selectionArgs = new String[]{info.getApp_info_id() + ""};
+
+        long row_id = db.delete(MySqliteHelper.TABLE_NAME, selection, selectionArgs);
+
+        if(row_id > 0)
+        {
+            return true;
+
+        }  else {
+
+            return false;
+        }
+    }
+
     public List<AppInfoModel> getLista_AppInfo()
     {
         List<AppInfoModel> modelItemList = new ArrayList<>();

@@ -13,4 +13,7 @@
     <string name="str_uninstall_button">Desinstalar</string>
     <string name="str_open_button">Abrir</string>
     <string name="str_update_button">Actualizar</string>
+    <string name="dialog_confirm_delete">Confirmar desinstalación</string>
+    <string name="btn_confirm_delete">Aceptar</string>
+    <string name="btn_cancel_delete">Cancelar</string>
 </resources>

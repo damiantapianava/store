@@ -1,9 +1,6 @@
 package mx.unam.store;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -13,28 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener
+public class MainActivity extends MainActivityDMO
 {
-    private static final int REQUEST_CODE_SECOND_ACTIVITY = 1;
-
-    private Context context;
-
-    private ActionBar action_bar;
-    private Toolbar toolbar;
-    private TextView empty_msg;
-
-    private ListView lista_app_info;
-
-    private Intent intent;
-
-    private AppInfoDAO dao;
-    private AppInfoAdapter adapter;
-    private AppInfoModel info;
-
-    private List<AppInfoModel> lista_app_info_model;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -59,16 +36,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         dao = new AppInfoDAO(context);
 
-        lista_app_info_model = dao.getLista_AppInfo();
-
-        if(lista_app_info_model.size() > 0)
-        {
-            adapter = new AppInfoAdapter(context, lista_app_info_model);
-
-            lista_app_info.setAdapter(adapter);
-
-            empty_msg.setVisibility(View.GONE);
-        }
+        init_lista_app();
     }
 
     @Override
@@ -100,13 +68,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     {
         if(REQUEST_CODE_SECOND_ACTIVITY == requestCode && resultCode == RESULT_OK)
         {
-            lista_app_info_model = dao.getLista_AppInfo();
-
-            adapter = new AppInfoAdapter(context, lista_app_info_model);
-
-            lista_app_info.setAdapter(adapter);
-
-            empty_msg.setVisibility(View.GONE);
+            init_lista_app();
 
         } else {
 

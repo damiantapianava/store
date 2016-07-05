@@ -1,8 +1,11 @@
 package mx.unam.store;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
@@ -18,9 +21,13 @@ public abstract class DetailActivityDMO extends AppCompatActivity implements Vie
     protected TextView details;
     protected CheckBox app_status;
     protected ActionBar action_bar;
+
     protected AppInfoModel info;
+    protected AppInfoDAO dao;
 
     protected Intent intent;
+
+    protected AlertDialog.Builder builder;
 
     protected final String url = "https://www.kubofinanciero.com";
 
@@ -47,5 +54,49 @@ public abstract class DetailActivityDMO extends AppCompatActivity implements Vie
         action_bar.setTitle(R.string.str_toolbar_title);
         action_bar.setDisplayHomeAsUpEnabled(true);
         action_bar.setHomeButtonEnabled(true);
+    }
+
+    protected void init_intent_info(Intent intent)
+    {
+        info = (AppInfoModel) intent.getExtras().getSerializable("item");
+
+        name_app.setText(info.getName_app());
+        name_dev.setText(info.getName_dev());
+        details.setText(info.getDetails());
+        app_status.setChecked(info.getApp_status() > 0 ? true : false);
+    }
+
+    protected void init_uninstall()
+    {
+        builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
+        builder.setMessage(R.string.dialog_confirm_delete);
+
+        builder.setPositiveButton(R.string.btn_confirm_delete, new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                dao = new AppInfoDAO(getApplicationContext());
+
+                boolean delete_OK = dao.delete(info);
+
+                if(delete_OK)
+                {
+                    setResult(RESULT_OK, new Intent());
+
+                    finish();
+                }
+            }
+        });
+
+        builder.setNegativeButton(R.string.btn_cancel_delete, new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                dialog.cancel();
+            }
+        });
+
+        builder.create();
+        builder.show();
     }
 }

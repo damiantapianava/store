@@ -18,7 +18,7 @@ public class AddActivity extends AddActivityDMO
 
         intent = getIntent();
 
-        if(intent != null)
+        if(intent.getExtras() != null)
         {
             info = (AppInfoModel) intent.getExtras().getSerializable("item");
 
