@@ -48,6 +48,7 @@ public class DetailActivity extends DetailActivityDMO
                 break;
 
             case R.id.btn_update:
+                init_update();
                 break;
         }
     }

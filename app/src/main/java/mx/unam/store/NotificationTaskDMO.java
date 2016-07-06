@@ -28,6 +28,11 @@ public abstract class NotificationTaskDMO extends AsyncTask<Integer, Integer, Bo
     protected Bitmap large_icon;
 
     protected int id;
+    protected int counter_limit;
+    protected int notification_type_id;
+
+    public final static int    UPDATE = 1;
+    public final static int UNINSTALL = 2;
 
     public void setAppInfoModel(AppInfoModel info)
     {
@@ -52,5 +57,9 @@ public abstract class NotificationTaskDMO extends AsyncTask<Integer, Integer, Bo
     public void setResources(Resources resources)
     {
         this.resources = resources;
+    }
+
+    public void setNotification_type_id(int notification_type_id) {
+        this.notification_type_id = notification_type_id;
     }
 }

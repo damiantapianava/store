@@ -80,6 +80,7 @@ public abstract class DetailActivityDMO extends AppCompatActivity implements Vie
             {
                 intent = new Intent(getApplicationContext(), ServiceNotification.class);
                 intent.putExtra("item", info);
+                intent.putExtra("notification_type_id", NotificationTask.UNINSTALL);
 
                 startService(intent);
             }
@@ -95,5 +96,14 @@ public abstract class DetailActivityDMO extends AppCompatActivity implements Vie
 
         builder.create();
         builder.show();
+    }
+
+    protected void init_update()
+    {
+        intent = new Intent(getApplicationContext(), ServiceNotification.class);
+        intent.putExtra("item", info);
+        intent.putExtra("notification_type_id", NotificationTask.UPDATE);
+
+        startService(intent);
     }
 }
