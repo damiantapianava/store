@@ -24,6 +24,7 @@ public abstract class NotificationTaskDMO extends AsyncTask<Integer, Integer, Bo
 
     protected AppInfoDAO dao;
     protected AppInfoModel info;
+    protected AsyncResponse delegate;
 
     protected Bitmap large_icon;
 

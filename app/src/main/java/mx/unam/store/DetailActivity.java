@@ -1,11 +1,10 @@
 package mx.unam.store;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +29,7 @@ public class DetailActivity extends DetailActivityDMO
         unistalled.setVisibility(View.GONE);
     }
 
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_open:
@@ -40,11 +40,6 @@ public class DetailActivity extends DetailActivityDMO
 
             case R.id.btn_uninstall:
                 init_uninstall();
-
-                IntentFilter filter = new IntentFilter();
-                filter.addAction(ServiceNotification.ACTION_UNINSTALL);
-
-                //registerReceiver(broadcastReceiver, filter);
                 break;
 
             case R.id.btn_update:
@@ -53,30 +48,32 @@ public class DetailActivity extends DetailActivityDMO
         }
     }
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver()
+    @Override
+    protected void onResume()
     {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            int uninstall_status = intent.getExtras().getInt("uninstall_status");
+        super.onResume();
 
-            switch (uninstall_status)
-            {
-                case ServiceNotification.STARTED:
-                    findViewById(R.id.btn_uninstall).setVisibility(View.GONE);
-                    findViewById(R.id.btn_open).setVisibility(View.GONE);
-                    findViewById(R.id.btn_update).setVisibility(View.GONE);
-                    break;
+        IntentFilter filter = new IntentFilter(ServiceNotification.ACTION_UNINSTALL);
 
-                case ServiceNotification.COMPLETED:
-                    menu_edit_ENABLED = false;
-                    unistalled.setVisibility(View.VISIBLE);
-                    break;
-            }
+        registerReceiver(receiver, filter);
 
-            stopService(new Intent(getApplicationContext(), ServiceNotification.class));
-        }
-    };
+        Log.d("receiver", "DetailActivity.onResume(): OK");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(receiver);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+
+        stopService(new Intent(getApplicationContext(), ServiceNotification.class));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

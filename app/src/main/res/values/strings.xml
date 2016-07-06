@@ -20,8 +20,8 @@
     <string name="notif_content_title_update">La app se actualizó</string>
     <string name="notif_content_text">Se ha completado la descarga</string>
     <string name="notif_content_text_update">Se ha completado la actualización</string>
-    <string name="notif_content_info">Descargado</string>
-    <string name="notif_content_info_update">Actualizando</string>
+    <string name="notif_content_info">Desinstalada</string>
+    <string name="notif_content_info_update">Actualizada</string>
     <string name="notif_bigtext_style">Se ha completado la desinstalación\nGracias por usar \nkubo App Manager</string>
     <string name="notif_bigtext_style_update">Se ha completado la actualización\nGracias por usar \nkubo App Manager</string>
     <string name="notif_content_title_pre_exc">Desinstalando</string>

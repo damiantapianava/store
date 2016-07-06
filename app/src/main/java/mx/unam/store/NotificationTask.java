@@ -6,6 +6,11 @@ import android.support.v4.app.NotificationCompat;
 
 public class NotificationTask extends NotificationTaskDMO
 {
+    protected NotificationTask(AsyncResponse asyncResponse)
+    {
+        delegate = asyncResponse;
+    }
+
     @Override
     protected void onPreExecute()
     {
@@ -117,6 +122,8 @@ public class NotificationTask extends NotificationTaskDMO
 */
 
             manager.notify(id, mNotif.build());
+
+            delegate.processFinish();
         }
     }
 }

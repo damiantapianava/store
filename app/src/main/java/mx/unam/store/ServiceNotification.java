@@ -25,8 +25,26 @@ public class ServiceNotification extends ServiceNotificationDMO
         info = (AppInfoModel)  intent.getExtras().getSerializable("item");
         notification_type_id = intent.getExtras().getInt("notification_type_id");
 
+        intent = new Intent(ACTION_UNINSTALL);
+        intent.putExtra("uninstall_status", STARTED);
+        intent.putExtra("notification_type_id", notification_type_id);
+
+        sendBroadcast(intent);
+
         init_task();
 
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+
+        intent = new Intent(ACTION_UNINSTALL);
+        intent.putExtra("uninstall_status", COMPLETED);
+        intent.putExtra("notification_type_id", notification_type_id);
+
+        sendBroadcast(intent);
     }
 }

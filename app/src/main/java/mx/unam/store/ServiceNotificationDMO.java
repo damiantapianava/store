@@ -3,6 +3,7 @@ package mx.unam.store;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -14,6 +15,8 @@ public abstract class ServiceNotificationDMO extends Service
     protected NotificationManager manager;
 
     protected Bitmap large_icon;
+
+    protected Intent intent;
 
     protected int notification_type_id;
 
@@ -28,7 +31,14 @@ public abstract class ServiceNotificationDMO extends Service
 
         manager  = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        task = new NotificationTask();
+        task = new NotificationTask(new AsyncResponse() {
+            @Override
+            public void processFinish()
+            {
+                stopSelf();
+            }
+        });
+
         task.setContext(getApplicationContext());
         task.setResources(getResources());
         task.setManager(manager);
@@ -37,12 +47,7 @@ public abstract class ServiceNotificationDMO extends Service
         task.setNotification_type_id(notification_type_id);
         task.execute();
 
-/*
-        sendBroadcast(new Intent().putExtra("uninstall_status", STARTED));
-        sendBroadcast(new Intent().putExtra("uninstall_status", COMPLETED));
-*/
-
         task = null;
-        stopSelf();
+
     }
 }
