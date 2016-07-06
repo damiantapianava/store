@@ -1,6 +1,9 @@
 package mx.unam.store;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +24,10 @@ public class DetailActivity extends DetailActivityDMO
         intent = getIntent();
 
         init_intent_info(intent);
+
+        menu_edit_ENABLED = true;
+
+        unistalled.setVisibility(View.GONE);
     }
 
     public void onClick(View v) {
@@ -33,12 +40,42 @@ public class DetailActivity extends DetailActivityDMO
 
             case R.id.btn_uninstall:
                 init_uninstall();
+
+                IntentFilter filter = new IntentFilter();
+                filter.addAction(ServiceNotification.ACTION_UNINSTALL);
+
+                //registerReceiver(broadcastReceiver, filter);
                 break;
 
             case R.id.btn_update:
                 break;
         }
     }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            int uninstall_status = intent.getExtras().getInt("uninstall_status");
+
+            switch (uninstall_status)
+            {
+                case ServiceNotification.STARTED:
+                    findViewById(R.id.btn_uninstall).setVisibility(View.GONE);
+                    findViewById(R.id.btn_open).setVisibility(View.GONE);
+                    findViewById(R.id.btn_update).setVisibility(View.GONE);
+                    break;
+
+                case ServiceNotification.COMPLETED:
+                    menu_edit_ENABLED = false;
+                    unistalled.setVisibility(View.VISIBLE);
+                    break;
+            }
+
+            stopService(new Intent(getApplicationContext(), ServiceNotification.class));
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -54,10 +91,12 @@ public class DetailActivity extends DetailActivityDMO
         switch (item.getItemId())
         {
             case R.id.menu_edit_entry:
-                intent = new Intent(getApplicationContext(), AddActivity.class);
-                intent.putExtra("item", info);
+                if(menu_edit_ENABLED) {
+                    intent = new Intent(getApplicationContext(), AddActivity.class);
+                    intent.putExtra("item", info);
 
-                startActivityForResult(intent, REQUEST_CODE_EDIT_ACTIVITY);
+                    startActivityForResult(intent, REQUEST_CODE_EDIT_ACTIVITY);
+                }
 
                 return true;
         }

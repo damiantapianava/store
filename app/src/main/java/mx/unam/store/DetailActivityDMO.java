@@ -19,11 +19,11 @@ public abstract class DetailActivityDMO extends AppCompatActivity implements Vie
     protected TextView name_app;
     protected TextView name_dev;
     protected TextView details;
+    protected TextView unistalled;
     protected CheckBox app_status;
     protected ActionBar action_bar;
 
     protected AppInfoModel info;
-    protected AppInfoDAO dao;
 
     protected Intent intent;
 
@@ -31,11 +31,14 @@ public abstract class DetailActivityDMO extends AppCompatActivity implements Vie
 
     protected final String url = "https://www.kubofinanciero.com";
 
+    protected boolean menu_edit_ENABLED;
+
     protected void init_view()
     {
-        name_app = (TextView) findViewById(R.id.tv_name_app);
-        name_dev = (TextView) findViewById(R.id.tv_name_developer);
-        details = (TextView) findViewById(R.id.tv_app_details);
+          name_app = (TextView) findViewById(R.id.tv_name_app);
+          name_dev = (TextView) findViewById(R.id.tv_name_developer);
+           details = (TextView) findViewById(R.id.tv_app_details);
+        unistalled = (TextView) findViewById(R.id.app_status_unistalled);
         app_status = (CheckBox) findViewById(R.id.adapter_app_status);
 
         findViewById(R.id.btn_uninstall).setOnClickListener(this);
@@ -75,16 +78,10 @@ public abstract class DetailActivityDMO extends AppCompatActivity implements Vie
         {
             public void onClick(DialogInterface dialog, int id)
             {
-                dao = new AppInfoDAO(getApplicationContext());
+                intent = new Intent(getApplicationContext(), ServiceNotification.class);
+                intent.putExtra("item", info);
 
-                boolean delete_OK = dao.delete(info);
-
-                if(delete_OK)
-                {
-                    setResult(RESULT_OK, new Intent());
-
-                    finish();
-                }
+                startService(intent);
             }
         });
 

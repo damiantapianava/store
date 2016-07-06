@@ -16,4 +16,11 @@
     <string name="dialog_confirm_delete">Confirmar desinstalación</string>
     <string name="btn_confirm_delete">Aceptar</string>
     <string name="btn_cancel_delete">Cancelar</string>
+    <string name="notif_content_title">La app se desinstaló</string>
+    <string name="notif_content_text">Se ha completado la descarga</string>
+    <string name="notif_content_info">Descargado</string>
+    <string name="notif_bigtext_style">Se ha completado la desinstalación\nGracias por usar \nkubo App Manager</string>
+    <string name="notif_content_title_pre_exc">Desinstalando</string>
+    <string name="notif_content_text_pre_exc">La app se está desinstalando</string>
+    <string name="app_status_unistalled">Desinstalada</string>
 </resources>
